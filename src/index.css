@@ -1,0 +1,44 @@
+:root {
+  --color: #fff;
+  --bgColor: #292929;
+  --header-height: 64px;
+  --header-font-family: "Open Sans", sans-serif;
+  --default-font-family: "Lora", serif;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  background-color: var(--bgColor);
+  color: var(--color);
+  font-size: 100%;
+  font-family: var(--default-font-family);
+  font-weight: normal;
+}
+
+#root {
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--header-font-family);
+}
+
+a,
+input,
+button {
+  font-family: var(--header-font-family);
+}
