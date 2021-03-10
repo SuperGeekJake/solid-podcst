@@ -1,5 +1,5 @@
 import { Component, createEffect, createMemo, JSX, Match, Show, Switch } from "solid-js";
-import { css } from '@emotion/css';
+import { css, keyframes } from '@emotion/css';
 
 import { useMediaContext } from './MediaContext';
 import { PlaySvg, PauseSvg, CycleSvg, PreviousSvg, NextSvg } from './svg';
@@ -15,13 +15,11 @@ const MediaBar: Component = () => {
   const volumeScaled = createMemo(() => state.volume * VOLUME_SCALE);
   const artSrc = createMemo(() => track()?.episodeArt || track()?.cover || undefined);
   const handleVolumeChange: JSX.EventHandler<HTMLInputElement, Event> = (evt) => {
-    const value = parseInt(evt.target.value) / VOLUME_SCALE;
+    const value = parseInt(evt.currentTarget.value) / VOLUME_SCALE;
     actions.volume(value);
   };
   createEffect(() => {
-    if (state.status === 'loading') {
-      playRef.focus();
-    }
+    if (state.status === 'loading') playRef.focus();
   });
   return (
     <div class={cssRoot} data-component={MediaBar.name} data-visible={state.status !== 'idle'}>
@@ -208,10 +206,15 @@ const cssToggle = css`
   margin: 0 15px;
 `;
 
+const spin = keyframes`
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
 const cssLoadingIcon = css`
   ${cssIcon}
-  @keyframes spin { 100% { transform:rotate(360deg); } }
-  animation:spin 1.5s linear infinite;
+  animation: ${spin} 1.5s linear infinite;
   width: auto;
   height: 32px;
 `;
@@ -226,7 +229,8 @@ const cssSeekInfo = css`
   position: absolute;
   top: 0;
   right: 0;
-  margin-top: 5px;
+  margin-top: 8px;
+  margin-right: 8px;
   font-size: 13px;
   font-family: monospace;
 `;

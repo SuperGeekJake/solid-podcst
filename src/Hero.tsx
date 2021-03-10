@@ -2,9 +2,8 @@ import { Component, createSignal, createEffect, Show } from "solid-js";
 import { css } from "@emotion/css";
 import axios from 'axios';
 
-// @ts-ignore
-import playPath from "./play.png";
 import { useMediaContext } from './MediaContext';
+import { PlaySvg } from './svg';
 
 export const API_HOST = `https://data.podcst.io`;
 
@@ -40,7 +39,7 @@ const Hero: Component = () => {
           <ul class={cssActionList}>
             <li>
               <button class={cssPlay} aria-label="Play" onClick={handlePlay}>
-                <img src={playPath} alt="Play" width="20" height="20" />
+                <PlaySvg class={cssPlayIcon} />
               </button>
             </li>
             <li><a class={cssMore} href="#">More Info</a></li>
@@ -137,6 +136,16 @@ const cssPlay = css`
   height: 56px;
   background: #4f986d;
   border: none;
+`;
+
+const cssPlayIcon = css`
+  width: auto;
+  height: 26px;
+  fill: #cccccc;
+
+  &:hover {
+    fill: #fff;
+  }
 `;
 
 const cssMore = css`

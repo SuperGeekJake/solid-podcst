@@ -16,6 +16,7 @@ type ContextValue = [
     load: (playlist: App.Episode[]) => void,
     toggle: () => void,
     volume: (value: number) => void,
+    seek: (value: number) => void,
   },
 ];
 
@@ -61,6 +62,10 @@ export const MediaProvider: Component = (props) => {
       volume: (value) => {
         Howler.volume(value);
         setState({ volume: value });
+      },
+      seek: (value) => {
+        if (!howl) return;
+        howl.seek(value);
       },
     },
   ];
