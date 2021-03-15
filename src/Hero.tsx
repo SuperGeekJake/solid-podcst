@@ -1,9 +1,9 @@
 import { Component, createSignal, createEffect, Show } from "solid-js";
 import { css } from "@emotion/css";
-import axios from 'axios';
+import axios from "axios";
 
-import { useMediaContext } from './MediaContext';
-import { PlaySvg } from './svg';
+import { useMediaContext } from "./MediaContext";
+import { PlaySvg } from "./svg";
 
 export const API_HOST = `https://data.podcst.io`;
 
@@ -13,10 +13,13 @@ const Hero: Component = () => {
   createEffect(() => {
     // TODO: Open issue on https://github.com/shantanuraj/podcst-api
     // API returns empty array when requesting only 1 when not cached
-    axios.get<App.Podcast[]>(`${API_HOST}/top?limit=2`)
-      .then(response => response.data[0].feed)
-      .then(podcastUrl => axios.get<App.EpisodeListing>(`${API_HOST}/feed?url=${podcastUrl}`))
-      .then(response => setData(response.data.episodes[0]));
+    axios
+      .get<App.Podcast[]>(`${API_HOST}/top?limit=2`)
+      .then((response) => response.data[0].feed)
+      .then((podcastUrl) =>
+        axios.get<App.EpisodeListing>(`${API_HOST}/feed?url=${podcastUrl}`)
+      )
+      .then((response) => setData(response.data.episodes[0]));
   });
   const handlePlay = () => {
     const episode = data();
@@ -42,7 +45,11 @@ const Hero: Component = () => {
                 <PlaySvg class={cssPlayIcon} />
               </button>
             </li>
-            <li><a class={cssMore} href="#">More Info</a></li>
+            <li>
+              <a class={cssMore} href="#">
+                More Info
+              </a>
+            </li>
           </ul>
         </div>
       </Show>

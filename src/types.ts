@@ -1,7 +1,7 @@
 /**
  * Shared Explicit state type
  */
-type ExplicitState = 'explicit' | 'cleaned' | 'notExplicit';
+type ExplicitState = "explicit" | "cleaned" | "notExplicit";
 
 /**
  * iTunes typings
@@ -61,7 +61,7 @@ declare namespace iTunes {
     /**
      * Entity type must always be `podcast`
      */
-    kind: 'podcast';
+    kind: "podcast";
     /**
      * Primary category
      */
@@ -92,7 +92,7 @@ declare namespace iTunes {
         /**
          * Numeric string id
          */
-        'im:id': string;
+        "im:id": string;
       };
     };
   }
@@ -157,9 +157,9 @@ declare namespace App {
     duration: number | null;
     link: string | null;
     file: {
-      url: string,
-      type: string,
-      length: number,
+      url: string;
+      type: string;
+      length: number;
     };
     author: string | null;
     episodeArt: string | null;
@@ -212,8 +212,8 @@ declare namespace App {
   type CacheResponse<T> = Promise<App.CachedEntity<T>>;
 
   interface Cache {
-    top: Provider['top']['cache'];
-    feed: Provider['feed']['cache'];
+    top: Provider["top"]["cache"];
+    feed: Provider["feed"]["cache"];
   }
 
   /**

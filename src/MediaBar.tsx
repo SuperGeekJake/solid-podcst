@@ -1,36 +1,52 @@
-import { Component, createEffect, createMemo, JSX, Match, Show, Switch } from "solid-js";
-import { css, keyframes } from '@emotion/css';
+import {
+  Component,
+  createEffect,
+  createMemo,
+  JSX,
+  Match,
+  Show,
+  Switch,
+} from "solid-js";
+import { css, keyframes } from "@emotion/css";
 
-import { useMediaContext } from './MediaContext';
-import { PlaySvg, PauseSvg, CycleSvg, PreviousSvg, NextSvg } from './svg';
-import { FormattedDuration } from './formatting';
+import { useMediaContext } from "./MediaContext";
+import { PlaySvg, PauseSvg, CycleSvg, PreviousSvg, NextSvg } from "./svg";
+import { FormattedDuration } from "./formatting";
 
 const MediaBar: Component = () => {
   let playRef: HTMLButtonElement;
   const [state, actions] = useMediaContext();
-  const track = createMemo<App.Episode | undefined>(() => state.playlist[state.track]);
-  const hasLoadedTrack = createMemo(() => state.status === 'playing' || state.status === 'paused');
+  const track = createMemo<App.Episode | undefined>(
+    () => state.playlist[state.track]
+  );
+  const hasLoadedTrack = createMemo(
+    () => state.status === "playing" || state.status === "paused"
+  );
   const hasPreviousTrack = createMemo(() => !!state.playlist[state.track - 1]);
   const hasNextTrack = createMemo(() => !!state.playlist[state.track + 1]);
   const volumeScaled = createMemo(() => state.volume * VOLUME_SCALE);
-  const artSrc = createMemo(() => track()?.episodeArt || track()?.cover || undefined);
-  const handleVolumeChange: JSX.EventHandler<HTMLInputElement, Event> = (evt) => {
+  const artSrc = createMemo(
+    () => track()?.episodeArt || track()?.cover || undefined
+  );
+  const handleVolumeChange: JSX.EventHandler<HTMLInputElement, Event> = (
+    evt
+  ) => {
     const value = parseInt(evt.currentTarget.value) / VOLUME_SCALE;
     actions.volume(value);
   };
   createEffect(() => {
-    if (state.status === 'loading') playRef.focus();
+    if (state.status === "loading") playRef.focus();
   });
   return (
-    <div class={cssRoot} data-component={MediaBar.name} data-visible={state.status !== 'idle'}>
+    <div
+      class={cssRoot}
+      data-component={MediaBar.name}
+      data-visible={state.status !== "idle"}
+    >
       <div class={cssTrackDetails}>
         <div>
           <Show when={!!artSrc()}>
-            <img
-              class={cssTrackArt}
-              src={artSrc()}
-              alt="Episode Art"
-            />
+            <img class={cssTrackArt} src={artSrc()} alt="Episode Art" />
           </Show>
         </div>
         <div>
@@ -50,7 +66,7 @@ const MediaBar: Component = () => {
           <PreviousSvg class={cssDeemphasizedIcon} />
         </button>
         <button
-          ref={ref => playRef = ref}
+          ref={(ref) => (playRef = ref)}
           class={cssToggle}
           onClick={actions.toggle}
           disabled={!hasLoadedTrack()}
@@ -58,10 +74,10 @@ const MediaBar: Component = () => {
           title="Play"
         >
           <Switch fallback={<CycleSvg class={cssLoadingIcon} />}>
-            <Match when={state.status === 'paused'}>
+            <Match when={state.status === "paused"}>
               <PlaySvg class={cssIcon} />
             </Match>
-            <Match when={state.status === 'playing'}>
+            <Match when={state.status === "playing"}>
               <PauseSvg class={cssIcon} />
             </Match>
           </Switch>
@@ -93,7 +109,8 @@ const MediaBar: Component = () => {
       </div>
 
       <div class={cssSeekInfo}>
-        <FormattedDuration value={state.seek} /> / <FormattedDuration value={track()?.duration || undefined} />
+        <FormattedDuration value={state.seek} /> /{" "}
+        <FormattedDuration value={track()?.duration || undefined} />
       </div>
     </div>
   );

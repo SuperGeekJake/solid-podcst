@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 
-export const HamburgerSvg: Component<{ class?: string; }> = (props) => (
+export const HamburgerSvg: Component<{ class?: string }> = (props) => (
   <svg
     class={props.class}
     width="36"
@@ -14,7 +14,7 @@ export const HamburgerSvg: Component<{ class?: string; }> = (props) => (
   </svg>
 );
 
-export const MagnifySvg: Component<{ class?: string; }> = (props) => (
+export const MagnifySvg: Component<{ class?: string }> = (props) => (
   <svg
     class={props.class}
     width="36"
@@ -26,7 +26,7 @@ export const MagnifySvg: Component<{ class?: string; }> = (props) => (
   </svg>
 );
 
-export const PlaySvg: Component<{ class?: string; }> = (props) => (
+export const PlaySvg: Component<{ class?: string }> = (props) => (
   <svg
     class={props.class}
     width="23.3"
@@ -38,7 +38,7 @@ export const PlaySvg: Component<{ class?: string; }> = (props) => (
   </svg>
 );
 
-export const PauseSvg: Component<{ class?: string; }> = (props) => (
+export const PauseSvg: Component<{ class?: string }> = (props) => (
   <svg
     class={props.class}
     width="24"
@@ -51,7 +51,7 @@ export const PauseSvg: Component<{ class?: string; }> = (props) => (
   </svg>
 );
 
-export const CycleSvg: Component<{ class?: string; }> = (props) => (
+export const CycleSvg: Component<{ class?: string }> = (props) => (
   <svg
     class={props.class}
     width="36"
@@ -64,7 +64,7 @@ export const CycleSvg: Component<{ class?: string; }> = (props) => (
   </svg>
 );
 
-export const PreviousSvg: Component<{ class?: string; }> = (props) => (
+export const PreviousSvg: Component<{ class?: string }> = (props) => (
   <svg
     class={props.class}
     width="28"
@@ -76,7 +76,7 @@ export const PreviousSvg: Component<{ class?: string; }> = (props) => (
   </svg>
 );
 
-export const NextSvg: Component<{ class?: string; }> = (props) => (
+export const NextSvg: Component<{ class?: string }> = (props) => (
   <svg
     class={props.class}
     width="28"

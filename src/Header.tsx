@@ -1,14 +1,16 @@
 import { Component, createSignal } from "solid-js";
-import { css } from '@emotion/css';
+import { css } from "@emotion/css";
 
-import { HamburgerSvg, MagnifySvg } from './svg';
+import { HamburgerSvg, MagnifySvg } from "./svg";
 
 const Header: Component = () => {
   const [visible, setVisiblity] = createSignal<boolean>(false);
   return (
     <header class={cssRoot} data-component={Header.name}>
       <div class={cssBrand}>
-        <a class={cssLogo} href="/">Podcst</a>
+        <a class={cssLogo} href="/">
+          Podcst
+        </a>
       </div>
       <button
         class={cssIconButton}

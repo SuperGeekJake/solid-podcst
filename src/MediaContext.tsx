@@ -1,8 +1,15 @@
-import { Component, createContext, createState, createEffect, useContext, createMemo } from "solid-js";
+import {
+  Component,
+  createContext,
+  createState,
+  createEffect,
+  useContext,
+  createMemo,
+} from "solid-js";
 import { Howl, Howler, HowlErrorCallback } from "howler";
 
 export interface MediaState {
-  status: 'idle' | 'loading' | 'playing' | 'paused';
+  status: "idle" | "loading" | "playing" | "paused";
   error: Error | null;
   playlist: App.Episode[];
   track: number;
@@ -13,11 +20,11 @@ export interface MediaState {
 type ContextValue = [
   MediaState,
   {
-    load: (playlist: App.Episode[]) => void,
-    toggle: () => void,
-    volume: (value: number) => void,
-    seek: (value: number) => void,
-  },
+    load: (playlist: App.Episode[]) => void;
+    toggle: () => void;
+    volume: (value: number) => void;
+    seek: (value: number) => void;
+  }
 ];
 
 export const MediaContext = createContext<ContextValue | []>([]);
@@ -26,14 +33,15 @@ type Seek = number | undefined;
 
 export const useMediaContext = () => {
   const context = useContext(MediaContext);
-  if (!context.length) throw new Error('usePlayerContext has been used outside provider');
+  if (!context.length)
+    throw new Error("usePlayerContext has been used outside provider");
   return context;
 };
 
 export const MediaProvider: Component = (props) => {
   let howl: Howl | null;
   const [state, setState] = createState<MediaState>({
-    status: 'idle',
+    status: "idle",
     error: null,
     playlist: [],
     track: 0,
@@ -46,7 +54,7 @@ export const MediaProvider: Component = (props) => {
       load: (playlist) => {
         const volume = Howler.volume();
         setState({
-          status: 'loading',
+          status: "loading",
           error: null,
           track: 0,
           seek: undefined,
@@ -56,8 +64,8 @@ export const MediaProvider: Component = (props) => {
       },
       toggle: () => {
         if (!howl) return;
-        if (state.status !== 'playing' && state.status !== 'paused') return;
-        howl[state.status === 'playing' ? 'pause' : 'play']();
+        if (state.status !== "playing" && state.status !== "paused") return;
+        howl[state.status === "playing" ? "pause" : "play"]();
       },
       volume: (value) => {
         Howler.volume(value);
@@ -69,32 +77,34 @@ export const MediaProvider: Component = (props) => {
       },
     },
   ];
-  const sources = createMemo<string[]>(() => state.playlist.map(episode => episode.file.url));
+  const sources = createMemo<string[]>(() =>
+    state.playlist.map((episode) => episode.file.url)
+  );
   const handlePause = () => {
     if (!howl) return;
-    const seek = (howl.seek() as Seek || 0);
+    const seek = (howl.seek() as Seek) || 0;
     setState({
-      status: 'paused',
+      status: "paused",
       seek,
     });
   };
   const handleSeek = () => {
     if (!howl) return;
-    const seek = (howl.seek() as Seek || 0);
+    const seek = (howl.seek() as Seek) || 0;
     setState({ seek });
   };
   const handlePlay = () => {
     if (!howl) return;
-    const seek = (howl.seek() as Seek || 0);
+    const seek = (howl.seek() as Seek) || 0;
     setState({
-      status: 'playing',
+      status: "playing",
       error: null,
       seek,
     });
   };
   const handleEnd = () => {
-    setState(prevState => ({
-      status: 'loading',
+    setState((prevState) => ({
+      status: "loading",
       error: null,
       track: ++prevState.track,
       seek: 0,
@@ -105,7 +115,7 @@ export const MediaProvider: Component = (props) => {
     setState({ error: error as Error });
   };
   createEffect(() => {
-    if (state.status === 'loading') {
+    if (state.status === "loading") {
       // If was playing, reset and begin new track
       if (howl) howl.unload();
 
@@ -122,7 +132,7 @@ export const MediaProvider: Component = (props) => {
       });
     }
 
-    if (state.status === 'idle') {
+    if (state.status === "idle") {
       if (!howl) return;
       howl.unload();
       howl = null;
@@ -131,7 +141,7 @@ export const MediaProvider: Component = (props) => {
 
   let intervalID: number | undefined;
   createEffect(() => {
-    if (state.status === 'playing') {
+    if (state.status === "playing") {
       intervalID = setInterval(() => {
         // TODO: Should probably throw an error
         if (!howl) return clearInterval(intervalID);
