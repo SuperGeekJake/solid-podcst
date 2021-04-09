@@ -14,6 +14,7 @@ export interface MediaState {
   playlist: App.Episode[];
   track: number;
   seek?: number;
+  duration?: number;
   volume: number;
 }
 
@@ -46,6 +47,7 @@ export const MediaProvider: Component = (props) => {
     playlist: [],
     track: 0,
     seek: 0,
+    duration: 0,
     volume: Howler.volume(),
   });
   const value: ContextValue = [
@@ -57,7 +59,8 @@ export const MediaProvider: Component = (props) => {
           status: "loading",
           error: null,
           track: 0,
-          seek: undefined,
+          seek: 0,
+          duration: 0,
           playlist,
           volume,
         });
@@ -96,10 +99,12 @@ export const MediaProvider: Component = (props) => {
   const handlePlay = () => {
     if (!howl) return;
     const seek = (howl.seek() as Seek) || 0;
+    const duration = howl.duration();
     setState({
       status: "playing",
       error: null,
       seek,
+      duration,
     });
   };
   const handleEnd = () => {
@@ -108,6 +113,7 @@ export const MediaProvider: Component = (props) => {
       error: null,
       track: ++prevState.track,
       seek: 0,
+      duration: 0,
     }));
   };
   const handleError: HowlErrorCallback = (_, error) => {

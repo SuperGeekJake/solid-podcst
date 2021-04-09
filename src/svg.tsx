@@ -1,89 +1,97 @@
 import { Component } from "solid-js";
 
-export const HamburgerSvg: Component<{ class?: string }> = (props) => (
+export const HamburgerSvg: Component<{ className?: string }> = (props) => (
   <svg
-    class={props.class}
-    width="36"
-    height="28"
-    viewBox="0 0 36 28"
+    className={props.className}
     xmlns="http://www.w3.org/2000/svg"
+    height="24px"
+    viewBox="0 0 24 24"
+    width="24px"
   >
-    <rect width="36" height="4" />
-    <rect y="12" width="36" height="4" />
-    <rect y="24" width="36" height="4" />
+    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
   </svg>
 );
 
-export const MagnifySvg: Component<{ class?: string }> = (props) => (
+export const MagnifySvg: Component<{ className?: string }> = (props) => (
   <svg
-    class={props.class}
-    width="36"
-    height="36"
-    viewBox="0 0 36 36"
+    className={props.className}
     xmlns="http://www.w3.org/2000/svg"
+    height="24px"
+    viewBox="0 0 24 24"
+    width="24px"
   >
-    <path d="M36,33.17l-7.38-7.38A15.86,15.86,0,0,0,32,16,16,16,0,1,0,16,32a15.86,15.86,0,0,0,9.79-3.38L33.17,36ZM4,16A12,12,0,1,1,16,28,12,12,0,0,1,4,16Z" />
+    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
   </svg>
 );
 
-export const PlaySvg: Component<{ class?: string }> = (props) => (
+export const PlaySvg: Component<{ className?: string }> = (props) => (
   <svg
-    class={props.class}
-    width="23.3"
-    height="32.2"
-    viewBox="0 0 23.3 32.2"
+    className={props.className}
     xmlns="http://www.w3.org/2000/svg"
+    height="24px"
+    viewBox="0 0 24 24"
+    width="24px"
   >
-    <path d="M23,15.4l-.11-.08L1.73.32,1.38.08A1,1,0,0,0,1,0,1,1,0,0,0,0,1V31.2a1,1,0,0,0,1,1,1,1,0,0,0,.38-.08l.35-.24,21.17-15L23,16.8a1,1,0,0,0,0-1.4Z" />
+    <path d="M8 5v14l11-7L8 5z" />
   </svg>
 );
 
-export const PauseSvg: Component<{ class?: string }> = (props) => (
+export const PauseSvg: Component<{ className?: string }> = (props) => (
   <svg
-    class={props.class}
-    width="24"
-    height="32"
-    viewBox="0 0 24 32"
+    className={props.className}
     xmlns="http://www.w3.org/2000/svg"
+    height="24px"
+    viewBox="0 0 24 24"
+    width="24px"
   >
-    <rect width="8" height="32" rx="1" />
-    <rect x="16" width="8" height="32" rx="1" />
+    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
   </svg>
 );
 
-export const CycleSvg: Component<{ class?: string }> = (props) => (
+export const CycleSvg: Component<{ className?: string }> = (props) => (
   <svg
-    class={props.class}
-    width="36"
-    height="36"
-    viewBox="0 0 36 36"
+    className={props.className}
     xmlns="http://www.w3.org/2000/svg"
+    height="24px"
+    viewBox="0 0 24 24"
+    width="24px"
   >
-    <path d="M8.11,8.11a14,14,0,0,1,20.74,1L24,14H36V2L31.69,6.31A18,18,0,0,0,.46,14H4.57A13.77,13.77,0,0,1,8.11,8.11Z" />
-    <path d="M27.89,27.89a14,14,0,0,1-20.74-1L12,22H0V34l4.31-4.31A18,18,0,0,0,35.54,22H31.41A13.89,13.89,0,0,1,27.89,27.89Z" />
+    <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z" />
   </svg>
 );
 
-export const PreviousSvg: Component<{ class?: string }> = (props) => (
+export const PreviousSvg: Component<{ className?: string }> = (props) => (
   <svg
-    class={props.class}
-    width="28"
-    height="32.2"
-    viewBox="0 0 28 32.2"
+    className={props.className}
     xmlns="http://www.w3.org/2000/svg"
+    height="24px"
+    viewBox="0 0 24 24"
+    width="24px"
   >
-    <path d="M1,.1H7a1,1,0,0,1,1,1V13.27L26.27.32l.35-.24A1,1,0,0,1,28,1V31.2a1,1,0,0,1-1.38.92l-.35-.24L8,18.93V31.1a1,1,0,0,1-1,1H1a1,1,0,0,1-1-1V1.1A1,1,0,0,1,1,.1Z" />
+    <path d="M6 6h2v12H6V6zm3.5 6l8.5 6V6l-8.5 6z" />
   </svg>
 );
 
-export const NextSvg: Component<{ class?: string }> = (props) => (
+export const NextSvg: Component<{ className?: string }> = (props) => (
   <svg
-    class={props.class}
-    width="28"
-    height="32.2"
-    viewBox="0 0 28 32.2"
+    className={props.className}
+    xmlns="http://www.w3.org/2000/svg"
+    width="24px"
+    height="24px"
+    viewBox="0 0 24 24"
+  >
+    <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+  </svg>
+);
+
+export const VolumeSvg: Component<{ className?: string }> = (props) => (
+  <svg
+    className={props.className}
+    width="24px"
+    height="24px"
+    viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path d="M27,.1H21a1,1,0,0,0-1,1V13.27L1.73.32,1.38.08A1,1,0,0,0,1,0,1,1,0,0,0,0,1V31.2a1,1,0,0,0,1,1,1,1,0,0,0,.38-.08l.35-.24L20,18.93V31.1a1,1,0,0,0,1,1h6a1,1,0,0,0,1-1V1.1A1,1,0,0,0,27,.1Z" />
+    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
   </svg>
 );

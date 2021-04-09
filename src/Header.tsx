@@ -1,42 +1,38 @@
 import { Component, createSignal } from "solid-js";
-import { css } from "@emotion/css";
 
+import { styled, css } from "./styled";
 import { HamburgerSvg, MagnifySvg } from "./svg";
 
 const Header: Component = () => {
   const [visible, setVisiblity] = createSignal<boolean>(false);
   return (
-    <header class={cssRoot} data-component={Header.name}>
-      <div class={cssBrand}>
-        <a class={cssLogo} href="/">
-          Podcst
-        </a>
-      </div>
-      <button
-        class={cssIconButton}
+    <Root data-component={Header.name}>
+      <Brand>
+        <Logo href="/">Podcst</Logo>
+      </Brand>
+      <IconButton
         aria-expanded={visible().toString() as "true" | "false"}
         aria-controls="menu"
         aria-label="Menu"
         onClick={() => setVisiblity(!visible())}
       >
-        <HamburgerSvg class={cssIcon} />
-      </button>
-      <button
-        class={cssIconButton}
+        <HamburgerSvg className={cssIcon} />
+      </IconButton>
+      <IconButton
         aria-expanded="false"
         aria-controls="search"
         aria-label="Search"
       >
-        <MagnifySvg class={cssIcon} />
-      </button>
-      <button class={cssSignIn}>Sign In</button>
-    </header>
+        <MagnifySvg className={cssIcon} />
+      </IconButton>
+      <SignIn>Sign In</SignIn>
+    </Root>
   );
 };
 
 export default Header;
 
-const cssRoot = css`
+const Root = styled("header")`
   position: fixed;
   top: 0;
   left: 0;
@@ -55,7 +51,7 @@ const cssRoot = css`
   }
 `;
 
-const cssBrand = css`
+const Brand = styled("div")`
   position: absolute;
   top: 0;
   right: auto;
@@ -67,7 +63,7 @@ const cssBrand = css`
   align-items: center;
 `;
 
-const cssLogo = css`
+const Logo = styled("a")`
   font-family: sans-serif;
   font-weight: bold;
   font-size: 30px;
@@ -76,7 +72,7 @@ const cssLogo = css`
   text-transform: uppercase;
 `;
 
-const cssIconButton = css`
+const IconButton = styled("button")`
   padding: 2px;
   margin: 0 25px 0 0;
   background: none;
@@ -101,7 +97,7 @@ const cssIcon = css`
   }
 `;
 
-const cssSignIn = css`
+const SignIn = styled("button")`
   padding: 0;
   margin: 0 0 0 auto;
   border: none;

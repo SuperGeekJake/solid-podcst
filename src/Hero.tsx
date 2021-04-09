@@ -1,7 +1,7 @@
 import { Component, createSignal, createEffect, Show } from "solid-js";
-import { css } from "@emotion/css";
 import axios from "axios";
 
+import { styled, css } from "./styled";
 import { useMediaContext } from "./MediaContext";
 import { PlaySvg } from "./svg";
 
@@ -28,38 +28,32 @@ const Hero: Component = () => {
     playerActions.load([episode]);
   };
   return (
-    <div class={cssRoot} data-component={Hero.name}>
+    <Root data-component={Hero.name}>
       <Show when={!!data()}>
-        <img
-          class={cssHeroBackground}
-          src={data()?.cover || undefined}
-          alt={data()?.title}
-        />
-        <div class={cssHeroContent}>
-          <h3 class={cssTitle}>{data()?.title}</h3>
-          <h4 class={cssAuthor}>{data()?.author}</h4>
-          <p class={cssDescription}>{data()?.summary}</p>
-          <ul class={cssActionList}>
+        <HeroBackground src={data()?.cover || undefined} alt={data()?.title} />
+        <HeroContent>
+          <Title>{data()?.title}</Title>
+          <Author>{data()?.author}</Author>
+          <Description>{data()?.summary}</Description>
+          <ActionList>
             <li>
-              <button class={cssPlay} aria-label="Play" onClick={handlePlay}>
-                <PlaySvg class={cssPlayIcon} />
-              </button>
+              <PlayButton aria-label="Play" onClick={handlePlay}>
+                <PlaySvg className={cssPlayIcon} />
+              </PlayButton>
             </li>
             <li>
-              <a class={cssMore} href="#">
-                More Info
-              </a>
+              <MoreAnchor href="#">More Info</MoreAnchor>
             </li>
-          </ul>
-        </div>
+          </ActionList>
+        </HeroContent>
       </Show>
-    </div>
+    </Root>
   );
 };
 
 export default Hero;
 
-const cssRoot = css`
+const Root = styled("div")`
   position: relative;
   padding-bottom: 39.5%;
 
@@ -68,7 +62,7 @@ const cssRoot = css`
   }
 `;
 
-const cssHeroBackground = css`
+const HeroBackground = styled("img")`
   position: absolute;
   object-fit: cover;
   width: 100%;
@@ -76,7 +70,7 @@ const cssHeroBackground = css`
   opacity: 0.7;
 `;
 
-const cssHeroContent = css`
+const HeroContent = styled("div")`
   position: absolute;
   top: 0;
   right: 0;
@@ -89,19 +83,19 @@ const cssHeroContent = css`
   padding: 50px;
 `;
 
-const cssTitle = css`
+const Title = styled("h3")`
   margin: 0;
   font-size: 2.2vw;
   font-weight: normal;
   text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
 `;
 
-const cssAuthor = css`
+const Author = styled("h4")`
   margin: 0 0 1vw 0;
   font-size: 1.6vw;
 `;
 
-const cssDescription = css`
+const Description = styled("p")`
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -115,7 +109,7 @@ const cssDescription = css`
   text-shadow: 2px 2px 4px rgb(0 0 0 / 45%);
 `;
 
-const cssActionList = css`
+const ActionList = styled("ul")`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -133,7 +127,7 @@ const cssActionList = css`
   }
 `;
 
-const cssPlay = css`
+const PlayButton = styled("button")`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -155,7 +149,7 @@ const cssPlayIcon = css`
   }
 `;
 
-const cssMore = css`
+const MoreAnchor = styled("a")`
   display: inline-block;
   padding: 14px 32px;
   border-radius: 26px;

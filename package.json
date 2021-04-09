@@ -11,15 +11,16 @@
     "@babel/preset-typescript": "^7.12.13",
     "@types/howler": "^2.2.1",
     "babel-preset-solid": "^0.24.0",
+    "csstype": "^3.0.7",
     "parcel": "^1.12.4",
     "prettier": "^2.2.1",
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@emotion/css": "^11.1.3",
     "@rturnq/solid-router": "^0.2.4",
     "axios": "^0.21.1",
     "date-fns": "^2.16.1",
+    "goober": "^2.0.37",
     "history": "^5.0.0",
     "howler": "^2.2.1",
     "solid-js": "^0.24.0"

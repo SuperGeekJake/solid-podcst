@@ -7,11 +7,19 @@ import {
   Show,
   Switch,
 } from "solid-js";
-import { css, keyframes } from "@emotion/css";
 
+import { styled, css, keyframes } from "./styled";
 import { useMediaContext } from "./MediaContext";
-import { PlaySvg, PauseSvg, CycleSvg, PreviousSvg, NextSvg } from "./svg";
+import {
+  PlaySvg,
+  PauseSvg,
+  CycleSvg,
+  PreviousSvg,
+  NextSvg,
+  VolumeSvg,
+} from "./svg";
 import { FormattedDuration } from "./formatting";
+import SeekBar from "./Seekbar";
 
 const MediaBar: Component = () => {
   let playRef: HTMLButtonElement;
@@ -38,64 +46,57 @@ const MediaBar: Component = () => {
     if (state.status === "loading") playRef.focus();
   });
   return (
-    <div
-      class={cssRoot}
-      data-component={MediaBar.name}
-      data-visible={state.status !== "idle"}
-    >
-      <div class={cssTrackDetails}>
+    <Root data-component={MediaBar.name} data-visible={state.status !== "idle"}>
+      <TrackDetails>
         <div>
           <Show when={!!artSrc()}>
-            <img class={cssTrackArt} src={artSrc()} alt="Episode Art" />
+            <TrackArt src={artSrc()} alt="Episode Art" />
           </Show>
         </div>
         <div>
-          <div class={cssTrackTitle}>{track()?.title}</div>
+          <TrackTitle>{track()?.title}</TrackTitle>
           {/* TODO: Update endpoint to return podcast title in episode data */}
-          <div class={cssTrackAuthor}>{track()?.author}</div>
+          <TrackAuthor>{track()?.author}</TrackAuthor>
         </div>
-      </div>
+      </TrackDetails>
 
-      <div class={cssTrackControls}>
-        <button
-          class={cssIconButton}
+      <TrackControls>
+        <IconButton
           aria-label="Previous song"
           title="Previous song"
           disabled={!hasPreviousTrack()}
         >
-          <PreviousSvg class={cssDeemphasizedIcon} />
-        </button>
-        <button
-          ref={(ref) => (playRef = ref)}
-          class={cssToggle}
+          <PreviousSvg className={cssDeemphasizedIcon} />
+        </IconButton>
+        <Toggle
+          ref={(ref: any) => (playRef = ref)}
           onClick={actions.toggle}
           disabled={!hasLoadedTrack()}
           aria-label="Play"
           title="Play"
         >
-          <Switch fallback={<CycleSvg class={cssLoadingIcon} />}>
+          <Switch fallback={<LoadingIcon className={cssIcon} />}>
             <Match when={state.status === "paused"}>
-              <PlaySvg class={cssIcon} />
+              <PlaySvg className={cssIcon} />
             </Match>
             <Match when={state.status === "playing"}>
-              <PauseSvg class={cssIcon} />
+              <PauseSvg className={cssIcon} />
             </Match>
           </Switch>
-        </button>
-        <button
-          class={cssIconButton}
+        </Toggle>
+        <IconButton
           disabled={!hasNextTrack()}
           aria-label="Next song"
           title="Next song"
         >
-          <NextSvg class={cssDeemphasizedIcon} />
-        </button>
-      </div>
+          <NextSvg className={cssDeemphasizedIcon} />
+        </IconButton>
+      </TrackControls>
 
-      <div class={cssMediaControls}>
-        <label>
-          Volume
-          <input
+      <MediaControls>
+        <label aria-label="Volume" title="Volume">
+          <VolumeSvg className={cssIcon} />
+          <VolumeSlider
             type="range"
             id="volume"
             name="volume"
@@ -106,13 +107,21 @@ const MediaBar: Component = () => {
           />
         </label>
         <button>Closed Captions</button>
-      </div>
+      </MediaControls>
 
-      <div class={cssSeekInfo}>
+      <SeekInfo>
         <FormattedDuration value={state.seek} /> /{" "}
-        <FormattedDuration value={track()?.duration || undefined} />
-      </div>
-    </div>
+        <FormattedDuration value={state.duration || undefined} />
+      </SeekInfo>
+
+      <Show when={hasLoadedTrack()}>
+        <SeekBar
+          seek={state.seek as number}
+          duration={state.duration as number}
+          onChange={actions.seek}
+        />
+      </Show>
+    </Root>
   );
 };
 
@@ -120,7 +129,7 @@ export default MediaBar;
 
 const VOLUME_SCALE = 50;
 
-const cssRoot = css`
+const Root = styled("div")`
   --media-bar-height: 90px;
 
   position: fixed;
@@ -148,44 +157,45 @@ const cssRoot = css`
   }
 `;
 
-const cssTrackDetails = css`
+const TrackDetails = styled("div")`
   flex: 1;
   display: flex;
   align-items: center;
 `;
 
-const cssTrackArt = css`
+const TrackArt = styled("img")`
+  display: block;
   width: var(--media-bar-height);
   height: var(--media-bar-height);
   object-fit: fill;
   margin-right: 10px;
 `;
 
-const cssTrackTitle = css`
+const TrackTitle = styled("div")`
   margin-bottom: 2px;
   font-family: sans-serif;
   font-size: 20px;
 `;
 
-const cssTrackAuthor = css`
+const TrackAuthor = styled("div")`
   font-size: 15px;
 `;
 
-const cssTrackControls = css`
+const TrackControls = styled("div")`
   flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 `;
 
-const cssMediaControls = css`
+const MediaControls = styled("div")`
   flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 `;
 
-const cssIconButton = css`
+const IconButton = styled("button")`
   padding: 2px;
   margin: 0;
   background: none;
@@ -213,8 +223,14 @@ const cssIcon = css`
   transition: fill 0.15s ease-out;
 `;
 
-const cssToggle = css`
-  ${cssIconButton}
+const cssDeemphasizedIcon = css`
+  /* TODO: Class composition not a feature of goober */
+  /* ${cssIcon}; */
+  width: auto;
+  height: 20px;
+`;
+
+const Toggle = styled(IconButton)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -229,20 +245,13 @@ const spin = keyframes`
   }
 `;
 
-const cssLoadingIcon = css`
-  ${cssIcon}
+const LoadingIcon = styled(CycleSvg)`
   animation: ${spin} 1.5s linear infinite;
   width: auto;
   height: 32px;
 `;
 
-const cssDeemphasizedIcon = css`
-  ${cssIcon}
-  width: auto;
-  height: 20px;
-`;
-
-const cssSeekInfo = css`
+const SeekInfo = styled("div")`
   position: absolute;
   top: 0;
   right: 0;
@@ -250,4 +259,17 @@ const cssSeekInfo = css`
   margin-right: 8px;
   font-size: 13px;
   font-family: monospace;
+`;
+
+const VolumeSlider = styled("input")`
+  opacity: 0;
+  width: 0;
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  &:focus {
+    opacity: 1;
+    width: auto;
+  }
 `;
